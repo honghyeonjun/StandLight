@@ -1,22 +1,37 @@
 #include <iostream>
-#include "Button.h"
-#include "Led.h"
 #include <wiringPi.h>
 #include "Listener.h"
+#include "Button.h"
+// #include "Led.h"
+// #include "Controller.h"
+// #include "View.h"
 
 int main()
 {
-    std::cout << "Hello World!" << std:: endl;
-    
-    Button Button1(27);
+    std::cout << "Hello World" << std::endl;
+
+    Button button1(27);
+
     Led led1(25);
-    Listener Listener(&Button1, &led1);
+    Led led2(24);
+    Led led3(23);
+    Led led4(22);
+    Led led5(21);
+
+
+
+    View view(&led1, &led2, &led3, &led4, &led5);
+
+    Controller control(&view);
+    Listener listener(&button1, &control);
+
 
     while(1)
     {
-        Listener.checkEvent();
+        listener.checkEvent();
+        view.lightView();
         delay(50);
     }
 
-    return 0; 
+    return 0;
 }
